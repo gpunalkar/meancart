@@ -1,0 +1,28 @@
+{
+  "name": "meancart",
+  "version": "1.0.0",
+  "description": "ecommerce cart project poc",
+  "main": "index.js",
+  "scripts": {
+    "test": "meancart"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpunalkar/meancart.git"
+  },
+  "keywords": [
+    "mongo",
+    "express",
+    "angular",
+    "node"
+  ],
+  "author": "Ganesh Punalkar <ganesh.punalkar@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gpunalkar/meancart/issues"
+  },
+  "homepage": "https://github.com/gpunalkar/meancart#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
