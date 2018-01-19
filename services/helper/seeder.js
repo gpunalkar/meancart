@@ -7,7 +7,8 @@ function Seeder() {
             "first_name": "John",
             "last_name": "Snow",
             "email_id": "john.node@mailinator.com",
-            "password": "925f806a1bccdbd773c0897dbce5ca3611306f51c30b5551269edac678bba6c5",
+            // "password": "925f806a1bccdbd773c0897dbce5ca3611306f51c30b5551269edac678bba6c5",
+            "password": "#test123",
             "isactive": true,
             "isnew": false,
             "isadmin": 1
@@ -16,22 +17,23 @@ function Seeder() {
             "first_name": "Peter",
             "last_name": "Lee",
             "email_id": "peter.node@mailinator.com",
-            "password": "925f806a1bccdbd773c0897dbce5ca3611306f51c30b5551269edac678bba6c5",
+            // "password": "925f806a1bccdbd773c0897dbce5ca3611306f51c30b5551269edac678bba6c5",
+            "password": "#test123",
+            
             "isactive": true,
             "isnew": false,
             "isadmin": 0
-        }
+        },
     ];
 
     this.checkUser();
-
-    console.log('Seeder Called');
 }
 
 Seeder.prototype.checkUser = function () {
+    let that = this;
     userModel.count({}, function (err, count) {
         if (!count) {
-            this.writeToDB();
+            that.writeToDB();
         } else {
             console.log(err);
         }

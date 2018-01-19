@@ -3,6 +3,8 @@ module.exports.CONSTANT = {
         USERS: 'users'
     },
     ENDPOINT: {
-        LOGIN: '/login'
-    }
+        LOGIN: '/login',
+        GET_ALL_USERS: '/getallusers'
+    },
+    LOGGED_IN_USERS: {}
 }

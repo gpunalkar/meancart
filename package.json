@@ -23,8 +23,11 @@
   },
   "homepage": "https://github.com/gpunalkar/meancart#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "daemon": "^1.1.0",
     "express": "^4.16.2",
+    "favicon": "0.0.2",
+    "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.13.8",
     "promise": "^8.0.1",
     "seeder": "^0.2.1"
