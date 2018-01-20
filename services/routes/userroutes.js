@@ -22,6 +22,16 @@ function userRoutes(app){
             res.send(err);
         });
     });
+
+    app.post(CONSTANT.ENDPOINT.DELETE_USERS, function(req, res){
+        console.log('req.body', req.body);
+        UserController.deleteuser(req.body).then(function(response){
+            res.send(response);
+        }, 
+        function(err){
+            res.send(err);
+        });
+    });
 }
 
 module.exports = userRoutes;

@@ -12,14 +12,14 @@ var env = process.env.NODE_ENV || "DEVELOPMENT";
 
 var dbURL = ENVIORNMENT[env].DB_URL;
 dbConection(dbURL);
-//require('./services/controllers/usercontroller');cc
+//require('./services/controllers/usercontroller');
 
 
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, userid, accessToken");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, userid, accessToken, locale");
     res.header('Access-Control-Allow-Methods', 'GET, POST');
     next();
   });

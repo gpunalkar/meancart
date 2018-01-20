@@ -41,6 +41,23 @@ UserController.prototype.validation = function (userObj) {
     })
 }
 
+UserController.prototype.getallusers = function (userObj) {
+    return new Promise(function (resolve, reject) {
+        var that = this;
+        UserDataModel.fetchAllExcept(userObj).then(
+            function (response) {
+                let res = prepareServerObject(true, 'User Validated Successfully', response);
+                resolve(res);
+            },
+            function (err) {
+                console.log("User Model Error", err);
+                let error = prepareServerObject(false, 'User Not Found', err);
+                reject(error);
+            }
+        )
+    })
+}
+
 function prepareServerObject(response, message, data) {
     var returnObject = {
         response: {
@@ -48,21 +65,38 @@ function prepareServerObject(response, message, data) {
             data: null
         }
     };
-    response ? returnObject.sucesss = 1 : returnObject.error = 1;
+    response ? returnObject.success = 1 : returnObject.error = 1;
     message ? returnObject.response.message = 1 : returnObject.response.message = " ";
     data ? returnObject.response.data = data : returnObject.response.data = null;
     return returnObject;
 }
 
-UserController.prototype.getalluser = function (userObj) {
+
+UserController.prototype.deleteuser = function (userObj) {
     return new Promise(function (resolve, reject) {
         var that = this;
-        UserDataModel.fetchAllExcept(userObj).then(
+        UserDataModel.deleteUser(userObj).then(
             function (response) {
-            
-                let res = prepareServerObject(true, 'User Validated Successfully', response);
+                let res = prepareServerObject(true, 'User deleted Successfully', response);
                 resolve(res);
-                // }
+            },
+            function (err) {
+                console.log("User Model Error", err);
+                let error = prepareServerObject(false, 'User Not Found', err);
+                reject(error);
+            }
+        )
+    })
+}
+
+
+UserController.prototype.logout = function (userObj) {
+    return new Promise(function (resolve, reject) {
+        var that = this;
+        UserDataModel.logoutUser(userObj).then(
+            function (response) {
+                let res = prepareServerObject(true, 'User Logout Successfully', response);
+                resolve(res);
             },
             function (err) {
                 console.log("User Model Error", err);
