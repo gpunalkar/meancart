@@ -3,6 +3,8 @@ var Promise = require('promise');
 var CONSTANT = require('../config/constant').CONSTANT;
 var UserDataModel = require('../datamodels/userdatamodel');
 var AuthenticationDataModel = require('../datamodels/AuthenticationDataModel').AuthenticationDataModel;
+var UtilityObject = require('../utiles/utilty').Utility;
+
 
 function UserController() {}
 
@@ -28,85 +30,159 @@ UserController.prototype.validation = function (userObj) {
                     CONSTANT.LOGGED_IN_USERS[responseData._id] = [];
                     CONSTANT.LOGGED_IN_USERS[responseData._id].push(token);
                 }
-                let res = prepareServerObject(true, 'User Validated Successfully', responseData);
+                let res = UtilityObject.prepareServerObject(true, 'User Validated Successfully', responseData);
                 resolve(res);
                 // }
             },
             function (err) {
                 console.log("User Model Error", err);
-                let error = prepareServerObject(false, 'User Not Found', err);
+                let error = UtilityObject.prepareServerObject(false, 'User Not Found', err);
                 reject(error);
             }
         )
     })
 }
 
-UserController.prototype.getallusers = function (userObj) {
+UserController.prototype.getallusers = function (userObj, headers) {
     return new Promise(function (resolve, reject) {
         var that = this;
-        UserDataModel.fetchAllExcept(userObj).then(
-            function (response) {
-                let res = prepareServerObject(true, 'User Validated Successfully', response);
+        try {
+            if (UtilityObject.userSessionValidity(headers)) {
+                UserDataModel.fetchAllExcept(userObj).then(
+                    function (response) {
+                        let res = UtilityObject.prepareServerObject(true, 'User Validated Successfully', response);
+                        resolve(res);
+                    },
+                    function (err) {
+                        console.log("User Model Error", err);
+                        let error = UtilityObject.prepareServerObject(false, 'User Not Found', err);
+                        reject(error);
+                    }
+                )
+            } else {
+                let res = UtilityObject.prepareServerObject(true, 'User Logout Successfully', {
+                    logout: 1
+                });
                 resolve(res);
-            },
-            function (err) {
-                console.log("User Model Error", err);
-                let error = prepareServerObject(false, 'User Not Found', err);
-                reject(error);
+
             }
-        )
+        } catch (error) {
+            let err = UtilityObject.prepareServerObject(false, 'logout failed', error);
+            reject(err);
+        }
     })
 }
 
-function prepareServerObject(response, message, data) {
-    var returnObject = {
-        response: {
-            message: null,
-            data: null
+UserController.prototype.adduser = function (userObj, headers) {
+    return new Promise(function (resolve, reject) {
+        var that = this;
+        try {
+            if (UtilityObject.userSessionValidity(headers)) {
+                UserDataModel.adduser(userObj).then(
+                    function (response) {
+                        let res = UtilityObject.prepareServerObject(true, 'User Added Successfully', response);
+                        resolve(res);
+                    },
+                    function (err) {
+                        console.log("User Model Error", err);
+                        let error = UtilityObject.prepareServerObject(false, 'User Not Found', err);
+                        reject(error);
+                    }
+                )
+            } else {
+                let res = UtilityObject.prepareServerObject(true, 'Session Expire', {
+                    logout: 1
+                });
+                reject(res);
+
+            }
+        } catch (error) {
+            let err = UtilityObject.prepareServerObject(false, 'Exception Error', error);
+            reject(err);
         }
-    };
-    response ? returnObject.success = 1 : returnObject.error = 1;
-    message ? returnObject.response.message = 1 : returnObject.response.message = " ";
-    data ? returnObject.response.data = data : returnObject.response.data = null;
-    return returnObject;
+    })
 }
 
+
+UserController.prototype.updateuser = function (userObj, headers) {
+    return new Promise(function (resolve, reject) {
+        var that = this;
+        try {
+            if (UtilityObject.userSessionValidity(headers)) {
+                UserDataModel.updateuser(userObj).then(
+                    function (response) {
+                        let res = UtilityObject.prepareServerObject(true, 'User Modified Successfully', response);
+                        resolve(res);
+                    },
+                    function (err) {
+                        console.log("User Model Error", err);
+                        let error = UtilityObject.prepareServerObject(false, 'User Not Found', err);
+                        reject(error);
+                    }
+                )
+            } else {
+                let res = UtilityObject.prepareServerObject(true, 'Session Expire', {
+                    logout: 1
+                });
+                reject(res);
+
+            }
+        } catch (error) {
+            let err = UtilityObject.prepareServerObject(false, 'Exception Error', error);
+            reject(err);
+        }
+    })
+}
 
 UserController.prototype.deleteuser = function (userObj) {
     return new Promise(function (resolve, reject) {
         var that = this;
-        UserDataModel.deleteUser(userObj).then(
-            function (response) {
-                let res = prepareServerObject(true, 'User deleted Successfully', response);
+        try {
+            if (UtilityObject.userSessionValidity(headers)) {
+                UserDataModel.deleteUser(userObj).then(
+                    function (response) {
+                        let res = UtilityObject.prepareServerObject(true, 'User Deleted Successfully', response);
+                        resolve(res);
+                    },
+                    function (err) {
+                        console.log("User Model Error", err);
+                        let error = UtilityObject.prepareServerObject(false, 'User Not Found', err);
+                        reject(error);
+                    }
+                )
+            } else {
+                let res = UtilityObject.prepareServerObject(true, 'Session Expire', {
+                    logout: 1
+                });
                 resolve(res);
-            },
-            function (err) {
-                console.log("User Model Error", err);
-                let error = prepareServerObject(false, 'User Not Found', err);
-                reject(error);
             }
-        )
+        } catch (error) {
+            let err = UtilityObject.prepareServerObject(false, 'Exception Error: ', error);
+            reject(err);
+        }
     })
 }
 
-
-UserController.prototype.logout = function (userObj) {
+UserController.prototype.logout = function (userObj, headers) {
     return new Promise(function (resolve, reject) {
-        var that = this;
-        UserDataModel.logoutUser(userObj).then(
-            function (response) {
-                let res = prepareServerObject(true, 'User Logout Successfully', response);
+        try {
+            if (UtilityObject.userSessionValidity(headers)) {
+                let res = UtilityObject.prepareServerObject(true, 'User Logout Successfully', {
+                    logout: 1
+                });
                 resolve(res);
-            },
-            function (err) {
-                console.log("User Model Error", err);
-                let error = prepareServerObject(false, 'User Not Found', err);
-                reject(error);
+            } else {
+                let res = UtilityObject.prepareServerObject(true, 'User Logout Rejected', {
+                    logout: 1
+                });
+                reject(res);
             }
-        )
+            
+        } catch (err) {
+            let error = UtilityObject.prepareServerObject(false, 'Session Expire', err);
+            reject(err);
+        }
     })
 }
-
-
 
 module.exports = new UserController();

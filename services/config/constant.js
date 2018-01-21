@@ -4,8 +4,10 @@ module.exports.CONSTANT = {
     },
     ENDPOINT: {
         LOGIN: '/login',
-        GET_ALL_USERS: '/getallusers',
+        ADD_USERS: '/createuser',
+        UPDATE_USERS: '/updateuser',
         DELETE_USERS: '/deleteuser',
+        GET_ALL_USERS: '/getallusers',
         LOGOUT: '/logout'
     },
     LOGGED_IN_USERS: {}
