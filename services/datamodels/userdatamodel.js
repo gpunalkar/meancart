@@ -110,6 +110,52 @@ UserDataModel.prototype.updateuser = function(userObj) {
     });
 };
 
+
+UserDataModel.prototype.changepassword = function(userObj) {
+    return new Promise(function (resolve, reject) {
+        try {
+            console.log('userObj****', userObj);
+            // var matchCriteria = {
+            //     email_id: {
+            //         $ne: userObj.email_id
+            //     }
+            // }
+            userModel.update({'_id': userObj._id}, userObj, function (err, response) {
+                if (err) {
+                    console.log("error" + err);
+                    reject(err);
+                } else {
+                    resolve(response);
+                }
+            });
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+UserDataModel.prototype.forgotpassword = function(userObj) {
+    return new Promise(function (resolve, reject) {
+        try {
+            console.log('userObj****', userObj);
+            var matchCriteria = {
+                 email_id: userObj.email_id,
+                 isactive: 'true'
+            }
+            userModel.find(matchCriteria, userObj, function (err, response) {
+                if (err) {
+                    console.log("error" + err);
+                    reject(err);
+                } else {
+                    resolve(response);
+                }
+            });
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
 UserDataModel.prototype.deleteUser = function(userObj) {
     return new Promise(function (resolve, reject) {
         try {
@@ -132,11 +178,7 @@ UserDataModel.prototype.updateuser = function(userObj) {
     return new Promise(function (resolve, reject) {
         try {
             console.log('userObj****', userObj);
-            // var matchCriteria = {
-            //     email_id: {
-            //         $ne: userObj.email_id
-            //     }
-            // }
+            
             userModel.update({'_id': userObj._id}, userObj, function (err, response) {
                 if (err) {
                     console.log("error" + err);

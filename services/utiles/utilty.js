@@ -1,5 +1,6 @@
 const CONSTANT = require('../config/constant').CONSTANT;
 const AuthenticationDataModelObject = require('../datamodels/AuthenticationDataModel').AuthenticationDataModel;
+var deleteKey = require('key-del');
 
 module.exports.Utility = (function() {
     
@@ -35,6 +36,15 @@ module.exports.Utility = (function() {
 
     Utility.prototype.userSessionValidity = function(headers) {
         return (headers.accesstoken && AuthenticationDataModelObject.verifySessionToken(headers.accesstoken) && headers.userid && CONSTANT.LOGGED_IN_USERS[headers.userid] && CONSTANT.LOGGED_IN_USERS[headers.userid].indexOf(headers.accesstoken) > -1);
+    }
+
+    Utility.prototype.manageAccesstokenSession = function(headers) {
+        if (CONSTANT.LOGGED_IN_USERS[headers.userid].length > 1) {
+            var indexToDelete = CONSTANT.LOGGED_IN_USERS[headers.userid].indexOf(headers.accesstoken);
+            CONSTANT.LOGGED_IN_USERS[headers.userid].splice(indexToDelete, 1);
+        } else {
+            deleteKey(CONSTANT.LOGGED_IN_USERS, [headers.userid]);
+        }
     }
     
     return new Utility();

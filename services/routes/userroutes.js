@@ -34,6 +34,26 @@ function userRoutes(app){
         });
     });
 
+    app.post(CONSTANT.ENDPOINT.CHANGE_PASSWORD, function(req, res){
+        console.log('req.body', req.body);
+        UserController.changepassword(req.body, req.headers).then(function(response){
+            res.send(response);
+        }, 
+        function(err){
+            res.send(err);
+        });
+    });
+
+    app.post(CONSTANT.ENDPOINT.RESET_PASSWORD, function(req, res){
+        console.log('req.body', req.body);
+        UserController.forgotpassword(req.body, req.headers).then(function(response){
+            res.send(response);
+        }, 
+        function(err){
+            res.send(err);
+        });
+    });
+
     app.post(CONSTANT.ENDPOINT.DELETE_USERS, function(req, res){
         console.log('req.body', req.body);
         UserController.deleteuser(req.body, req.headers).then(function(response){
