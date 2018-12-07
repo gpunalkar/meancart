@@ -32,6 +32,6 @@
     "mongoose": "^4.13.8",
     "nodemailer": "^4.4.2",
     "promise": "^8.0.1",
-    "seeder": "^0.2.1"
+    "seeder": "^0.2.3"
   }
 }
