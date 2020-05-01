@@ -4,7 +4,9 @@
   "description": "ecommerce cart project poc",
   "main": "index.js",
   "scripts": {
-    "test": "meancart"
+    "test": "meancart",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,8 @@
     "mongoose": "^4.13.8",
     "nodemailer": "^4.4.2",
     "promise": "^8.0.1",
-    "seeder": "^0.2.1"
-  }
+    "seeder": "^0.2.1",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
