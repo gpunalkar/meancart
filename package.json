@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/gpunalkar/meancart#readme",
   "dependencies": {
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.20.1",
     "daemon": "^1.1.0",
-    "express": "^4.16.2",
+    "express": "^4.18.2",
     "favicon": "0.0.2",
     "jsonwebtoken": "^8.1.0",
     "key-del": "^1.2.4",
