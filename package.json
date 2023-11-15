@@ -29,7 +29,7 @@
     "favicon": "0.0.2",
     "jsonwebtoken": "^8.1.0",
     "key-del": "^1.2.4",
-    "mongoose": "^4.13.8",
+    "mongoose": "^5.3.9",
     "nodemailer": "^4.4.2",
     "promise": "^8.0.1",
     "seeder": "^0.2.1"
